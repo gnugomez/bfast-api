@@ -1,0 +1,53 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "bpoint API",
+        "version": "0.1"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "operationId": "/users",
+                "responses": {
+                    "200": {
+                        "description": "Return a list of users"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "operationId": "/users",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "username"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User added"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    }
+                }
+            }
+        }
+    }
+}
