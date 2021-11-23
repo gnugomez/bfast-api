@@ -24,25 +24,29 @@ class CreateUser
     /**
      * @throws DomainException
      */
-    public function __invoke(string $username = null, string $email = null, string $password = null): User | bool
+    public function __invoke(string $username, string $email, string $password): User|bool
     {
         $newUser = new User(null);
         $domainException = new DomainException();
 
         try {
             $newUser->username = new UserName($username);
+
+            if ((new FindByUsername($this->repository))->__invoke($username)) {
+                throw new InvalidUsernameException('username already taken');
+            }
         } catch (InvalidUsernameException $e) {
             $domainException->addError('username', $e->getMessage());
         }
         try {
-            $newUser->setPassword(new UserPassword($password));
+            $newUser->password = new UserPassword($password);
         } catch (InvalidPasswordException $e) {
             $domainException->addError('password', $e->getMessage());
         }
         try {
             $newUser->email = new UserEmail($email);
 
-            if ($this->repository->findByEmail($email)) {
+            if ((new FindByEmail($this->repository))->__invoke($email)) {
                 throw new InvalidEmailException('already taken');
             }
 

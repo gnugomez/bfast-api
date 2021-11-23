@@ -4,9 +4,8 @@ namespace App\User\Domain\ValueObjects;
 
 use App\User\Domain\Exceptions\InvalidPasswordException;
 
-class UserPassword
+class UserPassword extends DomainProperty
 {
-    private string $password;
 
     /**
      * @throws InvalidPasswordException
@@ -20,11 +19,7 @@ class UserPassword
         if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/', $password)) {
             throw new InvalidPasswordException('Password must have at least 6 characters, 1 number, 1 special char and 1 uppercase letter');
         }
-        $this->password = $password;
+        $this->value = $password;
     }
 
-    public function value(): string
-    {
-        return $this->password;
-    }
 }

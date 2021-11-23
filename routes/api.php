@@ -22,6 +22,7 @@ $router->group([
     'prefix' => 'users',
     'namespace' => 'User',
 ], function () use ($router) {
-    $router->get('', "GetAllUsers");
-    $router->put('', "AddUser");
+    $router->get('', "GetAll");
+    $router->post('', "Add");
+    $router->delete('/{id}', "Delete");
 });

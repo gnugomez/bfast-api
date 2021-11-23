@@ -4,9 +4,8 @@ namespace App\User\Domain\ValueObjects;
 
 use App\User\Domain\Exceptions\InvalidEmailException;
 
-class UserEmail
+class UserEmail extends DomainProperty
 {
-    private string $email;
 
     /**
      * @throws InvalidEmailException
@@ -16,15 +15,10 @@ class UserEmail
             throw new InvalidEmailException('cannot be empty');
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidEmailException($email);
+            throw new InvalidEmailException($email . " is not a valid email adress");
         }else{
-            $this->email = $email;
+            $this->value = $email;
         }
-    }
-
-    public function value(): string
-    {
-        return $this->email;
     }
 
 }

@@ -2,17 +2,12 @@
 
 namespace App\User\Domain\ValueObjects;
 
-class UserId
+class UserId extends DomainProperty
 {
-    private ?int $id;
 
     public function __construct(?int $id)
     {
-        $this->id = $id;
+        $this->value = $id;
     }
 
-    public function value(): int
-    {
-        return $this->id;
-    }
 }

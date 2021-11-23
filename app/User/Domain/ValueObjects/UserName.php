@@ -4,9 +4,8 @@ namespace App\User\Domain\ValueObjects;
 
 use App\User\Domain\Exceptions\InvalidUsernameException;
 
-class UserName
+class UserName extends DomainProperty
 {
-    private string $name;
 
     /**
      * @throws InvalidUsernameException
@@ -20,12 +19,8 @@ class UserName
         if (strlen($name) < 3) {
             throw new InvalidUsernameException('Name must be at least 3 characters long');
         }else{
-            $this->name = $name;
+            $this->value = $name;
         }
     }
 
-    public function value(): string
-    {
-        return $this->name;
-    }
 }

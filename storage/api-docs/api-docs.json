@@ -1,15 +1,26 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "bpoint API",
-        "version": "0.1"
+        "title": "Bpoint API",
+        "description": "This api will be consumed by the bpoint app, all endpoints are documented right here.",
+        "contact": {
+            "name": "Jordi Gómez Hidalgo",
+            "url": "https://github.com/gnugomez/",
+            "email": "gnugomez@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "0.0.1"
     },
     "paths": {
         "/users": {
             "get": {
                 "tags": [
-                    "Users"
+                    "users"
                 ],
+                "summary": "List all users",
                 "operationId": "/users",
                 "responses": {
                     "200": {
@@ -17,36 +28,73 @@
                     }
                 }
             },
-            "put": {
+            "post": {
                 "tags": [
-                    "Users"
+                    "users"
                 ],
+                "summary": "Create a new user",
                 "operationId": "/users",
                 "parameters": [
                     {
                         "name": "username",
                         "in": "query",
-                        "description": "username"
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "password"
+                        "description": "New user username",
+                        "required": true
                     },
                     {
                         "name": "email",
                         "in": "query",
-                        "description": "email"
+                        "description": "New user email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "New user password",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "User added"
-                    },
                     "400": {
                         "description": "Bad request"
+                    },
+                    "201": {
+                        "description": "User added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "User",
+                "description": "User",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
             }
         }
     }
