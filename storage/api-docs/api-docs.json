@@ -21,7 +21,6 @@
                     "users"
                 ],
                 "summary": "List all users",
-                "operationId": "/users",
                 "responses": {
                     "200": {
                         "description": "Return a list of users"
@@ -33,7 +32,6 @@
                     "users"
                 ],
                 "summary": "Create a new user",
-                "operationId": "/users",
                 "parameters": [
                     {
                         "name": "username",
@@ -67,6 +65,26 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "delete": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted"
                     }
                 }
             }

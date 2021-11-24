@@ -1,22 +1,22 @@
 <?php
 
-namespace App\User\Application;
+namespace App\User\Application\UseCases;
 
-use App\User\Domain\Contracts\UserRepositoryContract;
+use App\User\Domain\Interfaces\UserRepositoryInterface;
 use App\User\Domain\Exceptions\DomainException;
 use App\User\Domain\Exceptions\InvalidEmailException;
 use App\User\Domain\Exceptions\InvalidPasswordException;
 use App\User\Domain\Exceptions\InvalidUsernameException;
 use App\User\Domain\User;
-use App\User\Domain\ValueObjects\UserEmail;
-use App\User\Domain\ValueObjects\UserName;
-use App\User\Domain\ValueObjects\UserPassword;
+use App\User\Domain\Objects\UserEmail;
+use App\User\Domain\Objects\UserName;
+use App\User\Domain\Objects\UserPassword;
 
 class CreateUser
 {
-    private UserRepositoryContract $repository;
+    private UserRepositoryInterface $repository;
 
-    public function __construct(UserRepositoryContract $repository)
+    public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

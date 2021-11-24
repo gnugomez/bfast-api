@@ -1,15 +1,15 @@
 <?php
 
-namespace App\User\Application;
+namespace App\User\Application\UseCases;
 
 use App\Models\User;
-use App\User\Domain\Contracts\UserRepositoryContract;
+use App\User\Domain\Interfaces\UserRepositoryInterface;
 
 class FindByUserName
 {
-    private UserRepositoryContract $repository;
+    private UserRepositoryInterface $repository;
 
-    public function __construct(UserRepositoryContract $repository)
+    public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

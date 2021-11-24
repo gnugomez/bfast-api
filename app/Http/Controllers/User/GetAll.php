@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
-use App\User\Application\ListUsers;
-use App\User\Domain\Contracts\UserRepositoryContract;
+use App\User\Application\UseCases\ListUsers;
+use App\User\Domain\Interfaces\UserRepositoryInterface;
 use Illuminate\Http\Response;
 
 /**
  * @OA\Get(
  *     path="/users",
- *     operationId="/users",
  *     tags={"users"},
  *     summary="List all users",
  *     @OA\Response(
@@ -21,9 +20,9 @@ use Illuminate\Http\Response;
 final class GetAll extends Controller
 {
 
-    private UserRepositoryContract $repository;
+    private UserRepositoryInterface $repository;
 
-    public function __construct(UserRepositoryContract $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->repository = $userRepository;
     }

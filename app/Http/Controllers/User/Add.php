@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\User\Application\CreateUser;
-use App\User\Application\FindByEmail;
-use App\User\Domain\Contracts\UserRepositoryContract;
+use App\User\Application\UseCases\CreateUser;
+use App\User\Application\UseCases\FindByEmail;
+use App\User\Domain\Interfaces\UserRepositoryInterface;
 use App\User\Domain\Exceptions\DomainException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,7 +14,6 @@ use Illuminate\Http\Response;
 /**
  * @OA\Post(
  *     path="/users",
- *     operationId="/users",
  *     tags={"users"},
  *     summary="Create a new user",
  *     @OA\Parameter (
@@ -49,9 +48,9 @@ use Illuminate\Http\Response;
 final class Add extends Controller
 {
 
-    private UserRepositoryContract $repository;
+    private UserRepositoryInterface $repository;
 
-    public function __construct(UserRepositoryContract $repository)
+    public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

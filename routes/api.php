@@ -24,5 +24,5 @@ $router->group([
 ], function () use ($router) {
     $router->get('', "GetAll");
     $router->post('', "Add");
-    $router->delete('/{id}', "Delete");
+    $router->delete('/{id:[0-9]+}', "Delete");
 });

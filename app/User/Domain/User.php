@@ -3,10 +3,10 @@
 namespace App\User\Domain;
 
 use App\User\Domain\Exceptions\DomainException;
-use App\User\Domain\ValueObjects\UserEmail;
-use App\User\Domain\ValueObjects\UserId;
-use App\User\Domain\ValueObjects\UserName;
-use App\User\Domain\ValueObjects\UserPassword;
+use App\User\Domain\Objects\UserEmail;
+use App\User\Domain\Objects\UserId;
+use App\User\Domain\Objects\UserName;
+use App\User\Domain\Objects\UserPassword;
 
 /**
  * Class User

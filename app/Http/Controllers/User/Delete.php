@@ -4,16 +4,32 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\User\Application\Exceptions\ApplicationException;
-use App\User\Application\DeleteUser;
-use App\User\Domain\Contracts\UserRepositoryContract;
+use App\User\Application\UseCases\DeleteUser;
+use App\User\Domain\Interfaces\UserRepositoryInterface;
 use Laravel\Lumen\Http\Request;
 
-class Delete extends Controller
+/**
+ * @OA\Delete (
+ *     path="/users/{id}",
+ *     summary="Delete user",
+ *     tags={"users"},
+ *     @OA\Parameter(
+ *          name="id",
+ *          in="path",
+ *          required=true,
+ *     ),
+ *     @OA\Response(
+ *          response="200",
+ *          description="User deleted"
+ *     )
+ * )
+ */
+final class Delete extends Controller
 {
 
-    private UserRepositoryContract $repository;
+    private UserRepositoryInterface $repository;
 
-    public function __construct(UserRepositoryContract $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->repository = $userRepository;
     }

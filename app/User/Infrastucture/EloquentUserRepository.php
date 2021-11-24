@@ -3,10 +3,10 @@
 namespace App\User\Infrastucture;
 
 use App\Models\User;
-use App\User\Domain\Contracts\UserRepositoryContract;
+use App\User\Domain\Interfaces\UserRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class EloquentUserRepository implements UserRepositoryContract
+class EloquentUserRepository implements UserRepositoryInterface
 {
 
     /**

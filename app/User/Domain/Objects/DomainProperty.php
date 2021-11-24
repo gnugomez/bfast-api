@@ -1,6 +1,6 @@
 <?php
 
-namespace App\User\Domain\ValueObjects;
+namespace App\User\Domain\Objects;
 
 /**
  * @property string $value
