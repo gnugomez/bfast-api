@@ -42,12 +42,12 @@ $app->configure('swagger-lume');
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    App\Exceptions\Handler::class
+    App\Infrastructure\Framework\Exceptions\Handler::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    App\Console\Kernel::class
+    App\Infrastructure\Framework\Console\Kernel::class
 );
 
 /*
@@ -78,9 +78,9 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Infrastructure\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -93,11 +93,13 @@ $app->configure('app');
 |
 */
 
-$app->register(App\Services\AppServiceProvider::class);
+$app->register(App\Infrastructure\Services\AppServiceProvider::class);
 $app->register(\SwaggerLume\ServiceProvider::class);
 
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
+/*$app->register(App\Framework\Services\AuthServiceProvider::class);*/
+//$app->register(App\Framework\Providers\EventServiceProvider::class);
+
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -111,9 +113,9 @@ $app->register(\SwaggerLume\ServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
+    'namespace' => 'App\Infrastructure\Http\Controllers',
 ], function ($router) {
-    require __DIR__ . '/../routes/api.php';
+    require __DIR__ . '/../app/Infrastructure/routes/api.php';
 });
 
 return $app;
