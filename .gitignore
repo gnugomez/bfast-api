@@ -2,5 +2,5 @@
 /.idea
 Homestead.json
 Homestead.yaml
-.env
+etc/Lumen8/.env
 .phpunit.result.cache
