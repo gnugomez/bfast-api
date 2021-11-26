@@ -2,6 +2,7 @@
 /.idea
 Homestead.json
 Homestead.yaml
-etc/Lumen8/.env
+.env
 .phpunit.result.cache
 etc/Lumen8/storage
+.DS_Store
