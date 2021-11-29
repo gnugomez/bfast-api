@@ -9,7 +9,20 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Lumen\Http\Request;
 
 
-class Me extends Controller
+/**
+ * @OA\Get(
+ *     path="/users/me",
+ *     tags={"users"},
+ *     security={{"jwt":{}}},
+ *     summary="Get current user",
+ *     @OA\Response(
+ *         response="200",
+ *         description="Successful returns current user",
+ *         @OA\JsonContent(ref="#/components/schemas/User"),
+ *     ),
+ * )
+ */
+final class Me extends Controller
 {
     private UserRepositoryContract $userRepository;
 
