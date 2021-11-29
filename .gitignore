@@ -4,5 +4,5 @@ Homestead.json
 Homestead.yaml
 .env
 .phpunit.result.cache
-etc/Lumen8/storage
+/storage
 .DS_Store
