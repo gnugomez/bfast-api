@@ -22,11 +22,18 @@ $router->get('/', function () use ($router) {
 $router->group([
     'prefix' => 'users',
     'namespace' => 'User',
+    'middleware' => 'auth'
 ], function () use ($router) {
     $router->get('', "GetAll");
     $router->get('me', "Me");
-    $router->post('', "Add");
     $router->delete('/{id:[0-9]+}', "Delete");
+});
+
+$router->group([
+    'prefix' => 'users',
+    'namespace' => 'User',
+], function () use ($router) {
+    $router->put('', "Add");
 });
 
 $router->group([

@@ -9,6 +9,33 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @OA\Post(
+ *     path="/auth/validate",
+ *     tags={"auth"},
+ *     summary="Validate credentials to get a token",
+ *     @OA\Parameter (
+ *         name="username",
+ *         in="query",
+ *         description="New user username",
+ *         required=true,
+ *     ),
+ *     @OA\Parameter (
+ *          name="password",
+ *          in="query",
+ *          description="New user password",
+ *          required=true,
+ *     ),
+ *     @OA\Response(
+ *         response="200",
+ *         description="Successful returns token with expiration time",
+ *     ),
+ *     @OA\Response(
+ *         response="401",
+ *         description="Unauthorized",
+ *     ),
+ * )
+ */
 final class ValidateUser extends Controller
 {
     private UserRepositoryContract $repository;
@@ -26,7 +53,7 @@ final class ValidateUser extends Controller
                 'password' => 'required|string',
             ]);
         } catch (ValidationException $e) {
-            return new Response($request->get('username'), 400);
+            return new Response(["error" => $e->errors()], 400);
         }
 
         $credentials = $request->only(['username', 'password']);

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
- * @OA\Post(
+ * @OA\Put(
  *     path="/users",
  *     tags={"users"},
  *     summary="Create a new user",
