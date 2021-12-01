@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
  *     path="/users",
  *     tags={"users"},
  *     summary="List all users",
- *     security={{"jwt":{}}},
+ *     security={{"passport":{}}},
  *     @OA\Response(
  *         response="200",
  *         description="Return a list of users",

@@ -1,5 +1,7 @@
 <?php
 
+use Dusterio\LumenPassport\LumenPassport;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
@@ -62,6 +64,7 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -95,11 +98,16 @@ $app->routeMiddleware([
 
 $app->register(App\Infrastructure\Services\AppServiceProvider::class);
 $app->register(\SwaggerLume\ServiceProvider::class);
+$app->register(App\Infrastructure\Services\AuthServiceProvider::class);
 
-/*$app->register(App\Framework\Services\AuthServiceProvider::class);*/
-//$app->register(App\Framework\Providers\EventServiceProvider::class);
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
-$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+/**
+ * Load Oauth passport routes
+ */
+
+LumenPassport::routes($app, ['prefix' => 'oauth']);
 
 /*
 |--------------------------------------------------------------------------

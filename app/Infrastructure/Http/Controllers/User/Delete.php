@@ -13,7 +13,7 @@ use Laravel\Lumen\Http\Request;
  *     path="/users/{id}",
  *     summary="Delete user",
  *     tags={"users"},
- *     security={{"jwt":{}}},
+ *     security={{"passport":{}}},
  *     @OA\Parameter(
  *          name="id",
  *          in="path",

@@ -8,8 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
-
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Passport\HasApiTokens;
 
 /**
  * @property mixed $username
@@ -22,9 +21,9 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @method count()
  * @method where(string $field, string $operator, $value)
  */
-class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable, HasFactory;
+    use Authenticatable, Authorizable, HasFactory, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -32,7 +31,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'username', 'email'
+        'username', 'email', 'password',
     ];
 
     /**
@@ -46,13 +45,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $table = 'Users';
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
+    public function findForPassport($username){
+        return $user = (new User)->where('email', '=', $username)->orWhere('username', $username)->first();
     }
 }

@@ -13,7 +13,7 @@ use Laravel\Lumen\Http\Request;
  * @OA\Get(
  *     path="/users/me",
  *     tags={"users"},
- *     security={{"jwt":{}}},
+ *     security={{"passport":{}}},
  *     summary="Get current user",
  *     @OA\Response(
  *         response="200",
@@ -31,7 +31,7 @@ final class Me extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): Response
     {
         return new Response(Auth::user());
     }
