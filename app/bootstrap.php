@@ -1,5 +1,7 @@
 <?php
 
+use Dusterio\LumenPassport\LumenPassport;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
@@ -20,14 +22,15 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 */
 
 $app = new Laravel\Lumen\Application(
-dirname(__DIR__ . "/../../")
+    dirname(__DIR__ . "/../../")
 );
 
 $app->withFacades();
 
 $app->withEloquent();
 
-$app->configure('swagger-lume');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +65,9 @@ $app->singleton(
 */
 
 $app->configure('app');
+$app->configure('auth');
+$app->configure('swagger-lume');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -77,10 +83,14 @@ $app->configure('app');
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
 
 $app->routeMiddleware([
     'auth' => App\Infrastructure\Http\Middleware\Authenticate::class,
 ]);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -95,11 +105,19 @@ $app->routeMiddleware([
 
 $app->register(App\Infrastructure\Services\AppServiceProvider::class);
 $app->register(\SwaggerLume\ServiceProvider::class);
+$app->register(App\Infrastructure\Services\AuthServiceProvider::class);
 
-/*$app->register(App\Framework\Services\AuthServiceProvider::class);*/
-//$app->register(App\Framework\Providers\EventServiceProvider::class);
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
-$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+
+
+/**
+ * Load Oauth passport routes
+ */
+
+LumenPassport::routes($app, ['prefix' => 'oauth']);
 
 /*
 |--------------------------------------------------------------------------

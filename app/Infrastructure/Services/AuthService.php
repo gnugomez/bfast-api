@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Services;
 
 
- class AuthService implements AuthServiceContract
+class AuthService implements AuthServiceContract
 {
     /**
      * @var \App\Infrastructure\Persistence\Eloquent\Repositories\UserRepository
@@ -15,7 +15,8 @@ namespace App\Infrastructure\Services;
      */
     public function __construct(
         \App\Infrastructure\Persistence\Eloquent\Repositories\UserRepository $userRepository
-    ) {
+    )
+    {
         $this->userRepository = $userRepository;
     }
 
@@ -39,6 +40,7 @@ namespace App\Infrastructure\Services;
         return $user;
     }
 }
+
 {
 
 }

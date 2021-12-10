@@ -1,4 +1,5 @@
 <?php
+
 use App\Infrastructure\Persistence\Eloquent\Models\User;
 use Laravel\Lumen\Routing\Router;
 
@@ -22,7 +23,7 @@ $router->get('/', function () use ($router) {
 $router->group([
     'prefix' => 'users',
     'namespace' => 'User',
-    'middleware' => 'auth'
+    'middleware' => 'auth:api'
 ], function () use ($router) {
     $router->get('', "GetAll");
     $router->get('me', "Me");
@@ -34,11 +35,4 @@ $router->group([
     'namespace' => 'User',
 ], function () use ($router) {
     $router->put('', "Add");
-});
-
-$router->group([
-    'prefix' => 'auth',
-    'namespace' => 'Auth',
-], function () use ($router) {
-    $router->post('validate', "ValidateUser");
 });

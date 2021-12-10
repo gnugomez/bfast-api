@@ -1,13 +1,14 @@
 {
-    "name": "bpoint/api",
-    "description": "The bpoint service api",
+    "name": "bfast/api",
+    "description": "The bfast service api",
     "license": "MIT",
     "type": "project",
     "require": {
         "php": "^8.0",
         "darkaonline/swagger-lume": "8.*",
-        "laravel/lumen-framework": "^8.3.1",
-        "tymon/jwt-auth": "dev-develop"
+        "dusterio/lumen-passport": "^0.3.4",
+        "fruitcake/laravel-cors": "^2.0",
+        "laravel/lumen-framework": "^8.3.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -32,6 +33,14 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
+        "post-install-cmd": [
+            "mkdir -p storage/framework/sessions",
+            "mkdir -p storage/framework/views",
+            "mkdir -p storage/framework/cache",
+            "chmod -R 777 storage",
+            "php artisan passport:keys --force",
+            "php artisan swagger-lume:generate"
+        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ]

@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @param Throwable $e
      * @return Response|JsonResponse
      *
@@ -54,7 +54,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e): Response|JsonResponse
     {
-        if($e instanceof NotFoundHttpException){
+        if ($e instanceof NotFoundHttpException) {
             return response()->json(["error" => ["Route not found"]], 404);
         }
         return parent::render($request, $e);

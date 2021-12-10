@@ -40,9 +40,6 @@ class User
      * )
      */
     public UserEmail $email;
-
-    protected UserPassword $password;
-
     /**
      * @var string
      * @OA\Property(
@@ -50,7 +47,6 @@ class User
      * )
      */
     public string $created_at;
-
     /**
      * @var string
      * @OA\Property(
@@ -58,6 +54,7 @@ class User
      * )
      */
     public string $updated_at;
+    protected UserPassword $password;
 
     public function __construct(?string $userId)
     {

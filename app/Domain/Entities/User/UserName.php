@@ -19,7 +19,7 @@ class UserName extends DomainEntity
 
         if (strlen($name) < 3) {
             throw new InvalidUsernameException('Name must be at least 3 characters long');
-        }else{
+        } else {
             $this->value = $name;
         }
     }
