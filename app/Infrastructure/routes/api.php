@@ -1,4 +1,5 @@
 <?php
+
 use App\Infrastructure\Persistence\Eloquent\Models\User;
 use Laravel\Lumen\Routing\Router;
 

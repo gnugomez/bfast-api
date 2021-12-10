@@ -22,14 +22,15 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 */
 
 $app = new Laravel\Lumen\Application(
-dirname(__DIR__ . "/../../")
+    dirname(__DIR__ . "/../../")
 );
 
 $app->withFacades();
 
 $app->withEloquent();
 
-$app->configure('swagger-lume');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,8 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('auth');
+$app->configure('swagger-lume');
+$app->configure('cors');
 
 /*
 |--------------------------------------------------------------------------
@@ -80,10 +83,14 @@ $app->configure('auth');
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
+$app->middleware([
+    Fruitcake\Cors\HandleCors::class,
+]);
 
 $app->routeMiddleware([
     'auth' => App\Infrastructure\Http\Middleware\Authenticate::class,
 ]);
+
 
 /*
 |--------------------------------------------------------------------------
@@ -102,6 +109,9 @@ $app->register(App\Infrastructure\Services\AuthServiceProvider::class);
 
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
+
 
 /**
  * Load Oauth passport routes

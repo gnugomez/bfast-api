@@ -55,7 +55,7 @@ final class Add extends Controller
         $this->repository = $repository;
     }
 
-    public function __invoke(Request $request): Response | JsonResponse
+    public function __invoke(Request $request): Response|JsonResponse
     {
         try {
             $user = (new CreateUser($this->repository))->__invoke(

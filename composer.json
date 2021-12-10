@@ -1,12 +1,13 @@
 {
-    "name": "bpoint/api",
-    "description": "The bpoint service api",
+    "name": "bfast/api",
+    "description": "The bfast service api",
     "license": "MIT",
     "type": "project",
     "require": {
         "php": "^8.0",
         "darkaonline/swagger-lume": "8.*",
         "dusterio/lumen-passport": "^0.3.4",
+        "fruitcake/laravel-cors": "^2.0",
         "laravel/lumen-framework": "^8.3.1"
     },
     "require-dev": {

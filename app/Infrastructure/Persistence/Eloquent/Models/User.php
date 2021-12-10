@@ -45,7 +45,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     protected $table = 'Users';
 
-    public function findForPassport($username){
+    public function findForPassport($username)
+    {
         return $user = (new User)->where('email', '=', $username)->orWhere('username', $username)->first();
     }
 }

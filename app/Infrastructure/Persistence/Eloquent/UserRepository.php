@@ -13,7 +13,8 @@ class UserRepository implements UserRepositoryContract
      */
     protected User $model;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->model = new User();
     }
 
@@ -62,7 +63,8 @@ class UserRepository implements UserRepositoryContract
         return $this->model->count();
     }
 
-    public function findByEmail($email){
+    public function findByEmail($email)
+    {
     }
 
     function where(string $field, string $operator, $value)
