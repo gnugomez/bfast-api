@@ -9,7 +9,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *     title="Bpoint API",
+ *     title="bfast API",
  *     description="This api will be consumed by the bpoint app, all endpoints are documented right here.",
  *     version="0.0.1",
  *     @OA\Contact(
