@@ -59,9 +59,10 @@ final class Add extends Controller
     {
         try {
             $user = (new CreateUser($this->repository))->__invoke(
-                $request->get('username'),
                 $request->get('email'),
-                $request->get('password')
+                $request->get('password'),
+                $request->get('name'),
+                $request->get('surname')
             );
         } catch (DomainException $exception) {
             return response()->json(["error" => $exception->errors()], 400);

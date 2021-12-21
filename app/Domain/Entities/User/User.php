@@ -30,7 +30,16 @@ class User
      *     type="string",
      * )
      */
-    public UserName $username;
+    public UserName $name;
+
+    /**
+     * @var UserName
+     *
+     * @OA\Property(
+     *     type="string",
+     * )
+     */
+    public UserSurname $surname;
 
     /**
      * @var UserEmail

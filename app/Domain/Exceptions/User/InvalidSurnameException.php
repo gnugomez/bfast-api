@@ -5,7 +5,7 @@ namespace App\Domain\Exceptions\User;
 use Exception;
 use Throwable;
 
-class InvalidUsernameException extends Exception
+class InvalidSurnameException extends Exception
 {
     public function __construct(string $message, Throwable $previous = null)
     {

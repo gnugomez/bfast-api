@@ -11,7 +11,8 @@ use Laravel\Lumen\Auth\Authorizable;
 use Laravel\Passport\HasApiTokens;
 
 /**
- * @property mixed $username
+ * @property mixed $name
+ * @property mixed $surname
  * @property mixed $password
  * @property mixed $email
  * @method find($id)
@@ -31,7 +32,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password',
+        'email', 'password', 'name', 'surname', 'role',
     ];
 
     /**
@@ -43,10 +44,5 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    protected $table = 'Users';
-
-    public function findForPassport($username)
-    {
-        return $user = (new User)->where('email', '=', $username)->orWhere('username', $username)->first();
-    }
+    protected $table = 'users';
 }

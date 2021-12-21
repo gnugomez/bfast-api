@@ -3,14 +3,16 @@
 namespace App\Application\User;
 
 use App\Domain\Contracts\UserRepositoryContract;
-use App\Domain\Exceptions\User\DomainException;
-use App\Domain\Exceptions\User\InvalidEmailException;
-use App\Domain\Exceptions\User\InvalidPasswordException;
-use App\Domain\Exceptions\User\InvalidUsernameException;
 use App\Domain\Entities\User\User;
 use App\Domain\Entities\User\UserEmail;
 use App\Domain\Entities\User\UserName;
 use App\Domain\Entities\User\UserPassword;
+use App\Domain\Entities\User\UserSurname;
+use App\Domain\Exceptions\User\DomainException;
+use App\Domain\Exceptions\User\InvalidEmailException;
+use App\Domain\Exceptions\User\InvalidNameException;
+use App\Domain\Exceptions\User\InvalidPasswordException;
+use App\Domain\Exceptions\User\InvalidSurnameException;
 
 class CreateUser
 {
@@ -24,18 +26,19 @@ class CreateUser
     /**
      * @throws DomainException
      */
-    public function __invoke(string $username, string $email, string $password): User|bool
+    public function __invoke(?string $email, ?string $password, ?string $name, ?string $surname): User|bool
     {
         $newUser = new User(null);
         $domainException = new DomainException();
 
         try {
-            $newUser->username = new UserName($username);
-
-            if ((new FindByUsername($this->repository))->__invoke($username)) {
-                throw new InvalidUsernameException('username already taken');
-            }
-        } catch (InvalidUsernameException $e) {
+            $newUser->name = new UserName($name);
+        } catch (InvalidNameException $e) {
+            $domainException->addError('username', $e->getMessage());
+        }
+        try {
+            $newUser->surname = new UserSurname($surname);
+        } catch (InvalidSurnameException $e) {
             $domainException->addError('username', $e->getMessage());
         }
         try {

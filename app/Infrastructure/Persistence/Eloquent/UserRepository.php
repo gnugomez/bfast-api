@@ -30,7 +30,8 @@ class UserRepository implements UserRepositoryContract
 
     function create($object): bool
     {
-        $this->model->username = $object->username->value;
+        $this->model->name = $object->name->value;
+        $this->model->surname = $object->surname->value;
         $this->model->email = $object->email->value;
         $this->model->password = password_hash($object->getPassword()->value, PASSWORD_DEFAULT);
 
