@@ -40,7 +40,6 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
  *     @OA\Response(
  *          response="201",
  *          description="User added",
- *          @OA\JsonContent(ref="#/components/schemas/User"),
  *     )
  * )
  */

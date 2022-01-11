@@ -18,7 +18,6 @@ use Laravel\Lumen\Http\Request;
  *     @OA\Response(
  *         response="200",
  *         description="Successful returns current user",
- *         @OA\JsonContent(ref="#/components/schemas/User"),
  *     ),
  * )
  */
