@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Persistence\Eloquent\Models;
+namespace App\Domain\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
@@ -15,12 +15,6 @@ use Laravel\Passport\HasApiTokens;
  * @property mixed $surname
  * @property mixed $password
  * @property mixed $email
- * @method find($id)
- * @method create(array $data)
- * @method first()
- * @method paginate(mixed|null $perPage, string[] $columns)
- * @method count()
- * @method where(string $field, string $operator, $value)
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {

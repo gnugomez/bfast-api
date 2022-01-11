@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Infrastructure\Http\Controllers\User;
+namespace App\Application\Controllers\User;
 
-use App\Infrastructure\Http\Controllers\Controller;
-use App\Application\User\ListUsers;
-use App\Domain\Contracts\UserRepositoryContract;
+use App\Application\Controllers\Controller;
+use App\Domain\Models\User;
 use Illuminate\Http\Response;
 
 /**
@@ -22,16 +21,14 @@ use Illuminate\Http\Response;
 final class GetAll extends Controller
 {
 
-    private UserRepositoryContract $repository;
 
-    public function __construct(UserRepositoryContract $userRepository)
+    public function __construct()
     {
-        $this->repository = $userRepository;
     }
 
     public function __invoke(): Response
     {
-        $allUsers = (new ListUsers($this->repository))();
+        $allUsers = User::all();
         return count($allUsers) ? new Response($allUsers) : new Response(['message' => 'No users found'], 404);
     }
 }

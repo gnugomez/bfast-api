@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Http\Controllers;
+namespace App\Application\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -33,5 +33,27 @@ class Controller extends BaseController
             'token_type' => 'bearer',
             'expires_in' => Auth::factory()->getTTL() * 60
         ]);
+    }
+    protected function respondWithSuccess($data, $code): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ], $code);
+    }
+    protected function respondWithError($message, $code): JsonResponse
+    {
+        return response()->json([
+            'success' => false,
+            'message' => $message
+        ], $code);
+    }
+    protected function respondWithValidationError($message, $errors, $code): JsonResponse
+    {
+        return response()->json([
+            'success' => false,
+            'message' => $message,
+            'errors' => $errors
+        ], $code);
     }
 }

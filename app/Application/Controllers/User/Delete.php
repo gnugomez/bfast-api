@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Infrastructure\Http\Controllers\User;
+namespace App\Application\Controllers\User;
 
-use App\Infrastructure\Http\Controllers\Controller;
-use App\Application\Exceptions\ApplicationException;
-use App\Application\User\DeleteUser;
-use App\Domain\Contracts\UserRepositoryContract;
+use App\Application\Controllers\Controller;
+use App\Domain\Models\User;
+use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Http\Request;
 
 /**
@@ -28,21 +27,23 @@ use Laravel\Lumen\Http\Request;
 final class Delete extends Controller
 {
 
-    private UserRepositoryContract $repository;
 
-    public function __construct(UserRepositoryContract $userRepository)
+    public function __construct()
     {
-        $this->repository = $userRepository;
     }
 
     public function __invoke(Request $request, $id): \Illuminate\Http\JsonResponse
     {
-        $deleteUser = new DeleteUser($this->repository);
         try {
-            $deleteUser($id);
-        } catch (ApplicationException $e) {
-            return response()->json(["error" => $e->errors()], 404);
+            $this->validate($request, [
+                'id' => 'required|integer|exists:users,id',
+            ]);
+        } catch (ValidationException $e) {
+            $this->respondWithValidationError("User does not exist failed", $e->errors(), 400);
         }
+
+        User::destroy($id);
+
         return response()->json(["success" => "User $id deleted."]);
     }
 

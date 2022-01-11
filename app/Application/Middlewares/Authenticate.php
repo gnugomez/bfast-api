@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Http\Middleware;
+namespace App\Application\Middlewares;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
