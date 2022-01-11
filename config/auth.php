@@ -13,7 +13,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Infrastructure\Persistence\Eloquent\Models\User::class
+            'model' => App\Domain\Models\User::class
         ]
     ]
 ];

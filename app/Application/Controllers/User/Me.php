@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Infrastructure\Http\Controllers\User;
+namespace App\Application\Controllers\User;
 
-use App\Infrastructure\Http\Controllers\Controller;
+use App\Application\Controllers\Controller;
 use App\Domain\Contracts\UserRepositoryContract;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -24,11 +24,9 @@ use Laravel\Lumen\Http\Request;
  */
 final class Me extends Controller
 {
-    private UserRepositoryContract $userRepository;
 
-    public function __construct(UserRepositoryContract $userRepository)
+    public function __construct()
     {
-        $this->userRepository = $userRepository;
     }
 
     public function __invoke(Request $request): Response

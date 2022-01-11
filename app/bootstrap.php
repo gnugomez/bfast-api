@@ -88,7 +88,7 @@ $app->middleware([
 ]);
 
 $app->routeMiddleware([
-    'auth' => App\Infrastructure\Http\Middleware\Authenticate::class,
+    'auth' => App\Application\Middlewares\Authenticate::class,
 ]);
 
 
@@ -131,7 +131,7 @@ LumenPassport::routes($app, ['prefix' => 'oauth']);
 */
 
 $app->router->group([
-    'namespace' => 'App\Infrastructure\Http\Controllers',
+    'namespace' => 'App\Application\Controllers',
 ], function ($router) {
     require __DIR__ . '/Infrastructure/routes/api.php';
 });

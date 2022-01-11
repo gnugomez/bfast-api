@@ -34,5 +34,5 @@ $router->group([
     'prefix' => 'users',
     'namespace' => 'User',
 ], function () use ($router) {
-    $router->put('', "Add");
+    $router->put('', "Create");
 });

@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Infrastructure\Http\Controllers\User;
+namespace App\Application\Controllers\User;
 
-use App\Infrastructure\Http\Controllers\Controller;
-use App\Application\User\CreateUser;
-use App\Application\User\FindByEmail;
-use App\Domain\Contracts\UserRepositoryContract;
-use App\Domain\Exceptions\User\DomainException;
+use App\Application\Controllers\Controller;
+use App\Domain\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
  * @OA\Put(
@@ -45,29 +44,33 @@ use Illuminate\Http\Response;
  *     )
  * )
  */
-final class Add extends Controller
+final class Create extends Controller
 {
 
-    private UserRepositoryContract $repository;
 
-    public function __construct(UserRepositoryContract $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
     }
 
     public function __invoke(Request $request): Response|JsonResponse
     {
         try {
-            $user = (new CreateUser($this->repository))->__invoke(
-                $request->get('email'),
-                $request->get('password'),
-                $request->get('name'),
-                $request->get('surname')
+            $this->validate($request, [
+                'name' => 'required|string|max:255',
+                'surname' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6',
+            ]);
+        } catch (ValidationException $e) {
+            return $this->respondWithValidationError(
+                "Unable to create user",
+                $e->errors(),
+                ResponseAlias::HTTP_BAD_REQUEST
             );
-        } catch (DomainException $exception) {
-            return response()->json(["error" => $exception->errors()], 400);
         }
 
-        return response()->json((new FindByEmail($this->repository))->__invoke($user->email->value), 201);
+        User::create($request->all())->save();
+
+        return $this->respondWithSuccess("User created", ResponseAlias::HTTP_CREATED);
     }
 }
