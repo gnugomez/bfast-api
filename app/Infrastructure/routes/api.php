@@ -36,3 +36,13 @@ $router->group([
 ], function () use ($router) {
     $router->put('', "Create");
 });
+
+$router->group([
+    'prefix' => 'organizations',
+    'namespace' => 'Organization',
+    'middleware' => 'auth:api'
+], function () use ($router) {
+    $router->put('', "Create");
+    $router->get('', "GetAll");
+    $router->delete('/{id:[0-9]+}', "Delete");
+});

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Lumen\Auth\Authorizable;
 use Laravel\Passport\HasApiTokens;
 
@@ -20,7 +21,7 @@ use Laravel\Passport\HasApiTokens;
  */
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable, HasFactory, HasApiTokens;
+    use Authenticatable, Authorizable, HasFactory, HasApiTokens, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +45,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function organizations(): BelongsToMany
     {
-        return $this->belongsToMany(Organization::class);
+        return $this->belongsToMany(Organization::class)->withPivot("role");
     }
 }

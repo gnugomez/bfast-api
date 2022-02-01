@@ -34,13 +34,15 @@ class Controller extends BaseController
             'expires_in' => Auth::factory()->getTTL() * 60
         ]);
     }
-    protected function respondWithSuccess($data, $code): JsonResponse
+
+    protected function respondWithSuccess($message = null, $code = 200): JsonResponse
     {
         return response()->json([
             'success' => true,
-            'data' => $data
+            'message' => $message,
         ], $code);
     }
+
     protected function respondWithError($message, $code): JsonResponse
     {
         return response()->json([
@@ -48,6 +50,7 @@ class Controller extends BaseController
             'message' => $message
         ], $code);
     }
+
     protected function respondWithValidationError($message, $errors, $code): JsonResponse
     {
         return response()->json([

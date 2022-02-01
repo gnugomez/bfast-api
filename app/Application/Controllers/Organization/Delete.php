@@ -1,18 +1,20 @@
 <?php
 
-namespace App\Application\Controllers\User;
+namespace App\Application\Controllers\Organization;
 
 use App\Application\Controllers\Controller;
+use App\Domain\Models\Organization;
 use App\Domain\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Http\Request;
 
 /**
  * @OA\Delete (
- *     path="/users/{id}",
+ *     path="/organizations/{id}",
  *     summary="Delete user",
- *     tags={"users"},
+ *     tags={"organizations"},
  *     security={{"passport":{}}},
  *     @OA\Parameter(
  *          name="id",
@@ -37,15 +39,19 @@ final class Delete extends Controller
     {
         try {
             $this->validate($request, [
-                'id' => 'required|integer|exists:users,id',
+                'id' => 'required|integer|exists:organizations,id',
             ]);
         } catch (ValidationException $e) {
-            $this->respondWithValidationError("User does not exist failed", $e->errors(), 400);
+            $this->respondWithValidationError("Organization does not exist failed", $e->errors(), 400);
         }
 
-        User::destroy($id);
+        $user = Auth::User();
 
-        return $this->respondWithSuccess( "User $id deleted.");
+        $user->organizations()->detach($id);
+
+        Organization::destroy($id);
+
+        return $this->respondWithSuccess( "Organization $id deleted.");
     }
 
 }

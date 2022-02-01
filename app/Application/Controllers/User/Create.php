@@ -58,7 +58,7 @@ final class Create extends Controller
                 'name' => 'required|string|max:255',
                 'surname' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:6',
+                'password' => ['required', 'string', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/'],
             ]);
         } catch (ValidationException $e) {
             return $this->respondWithValidationError(
@@ -68,7 +68,12 @@ final class Create extends Controller
             );
         }
 
-        User::create($request->all())->save();
+        User::create([
+            "name" => $request->get("name"),
+            "surname" => $request->get("surname"),
+            "email" => $request->get("email"),
+            "password" => password_hash($request->get("password"), PASSWORD_DEFAULT),
+        ])->save();
 
         return $this->respondWithSuccess("User created", ResponseAlias::HTTP_CREATED);
     }
