@@ -35,12 +35,18 @@ class Controller extends BaseController
         ]);
     }
 
-    protected function respondWithSuccess($message = null, $code = 200): JsonResponse
+    protected function respondWithSuccess($message = null, $code = 200, $data = null): JsonResponse
     {
-        return response()->json([
+        $response = [
             'success' => true,
             'message' => $message,
-        ], $code);
+        ];
+
+        if ($data) {
+            $response['data'] = $data;
+        }
+
+        return response()->json($response, $code);
     }
 
     protected function respondWithError($message, $code): JsonResponse

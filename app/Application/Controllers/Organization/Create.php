@@ -55,15 +55,14 @@ final class Create extends Controller
         $user = Auth::User();
 
         $newOrganization = $user->organizations()->create([
-            'name' => $request->name,
-        ]);
+            'name' => $request->input('name'),
+        ])->fresh();
 
-        if ($newOrganization) {
-            return $this->respondWithSuccess(
-                "Organization created successfully",
-                ResponseAlias::HTTP_CREATED
-            );
-        }
+        return $this->respondWithSuccess(
+            "Organization created successfully",
+            ResponseAlias::HTTP_CREATED,
+            $user->organizations()->get()->where('id', $newOrganization->id)->first()
+        );
 
     }
 }
