@@ -46,4 +46,5 @@ $router->group([
     $router->get('', "GetAll");
     $router->delete('/{id:[0-9]+}', "Delete");
     $router->get('/{id:[0-9]+}/members', "GetMembers");
+    $router->put('/{id:[0-9]+}/members', "AddMember");
 });

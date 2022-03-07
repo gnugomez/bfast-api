@@ -39,17 +39,23 @@ final class Delete extends Controller
     {
         try {
             $this->validate($request, [
-                'id' => 'required|integer|exists:organizations,id',
+                'id' => 'required|integer',
             ]);
         } catch (ValidationException $e) {
-            $this->respondWithValidationError("Organization does not exist failed", $e->errors(), 400);
+            $this->respondWithValidationError("Invalid organization id", $e->errors(), 400);
         }
 
-        $user = Auth::User();
+        $org = Auth::User()->organizations()->get()->find($id);
 
-        $user->organizations()->detach($id);
+        if (!$org) {
+            return $this->respondWithError("Organization not found", 404);
+        }
 
-        Organization::destroy($id);
+        if ($org->pivot->role !== 'owner') {
+            return $this->respondWithError("You are not the owner of this organization", 403);
+        }
+
+        $org->delete();
 
         return $this->respondWithSuccess( "Organization $id deleted.");
     }
