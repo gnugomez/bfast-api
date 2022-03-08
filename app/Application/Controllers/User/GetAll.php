@@ -20,12 +20,6 @@ use Illuminate\Http\JsonResponse;
  */
 final class GetAll extends Controller
 {
-
-
-    public function __construct()
-    {
-    }
-
     public function __invoke(): JsonResponse
     {
         return new JsonResponse(User::all());

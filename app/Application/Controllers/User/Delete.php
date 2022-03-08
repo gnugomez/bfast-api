@@ -28,11 +28,6 @@ use Laravel\Lumen\Http\Request;
 final class Delete extends Controller
 {
 
-
-    public function __construct()
-    {
-    }
-
     public function __invoke(Request $request, $id): JsonResponse
     {
         try {

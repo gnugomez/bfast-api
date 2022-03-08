@@ -3,9 +3,7 @@
 namespace App\Application\Controllers\User;
 
 use App\Application\Controllers\Controller;
-use App\Domain\Contracts\UserRepositoryContract;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Lumen\Http\Request;
 
 
@@ -23,13 +21,8 @@ use Laravel\Lumen\Http\Request;
  */
 final class Me extends Controller
 {
-
-    public function __construct()
-    {
-    }
-
     public function __invoke(Request $request): Response
     {
-        return new Response(Auth::user());
+        return new Response($request->user());
     }
 }
