@@ -3,12 +3,9 @@
 namespace App\Application\Controllers\Organization;
 
 use App\Application\Controllers\Controller;
-use App\Domain\Models\Organization;
-use App\Domain\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use Laravel\Lumen\Http\Request;
 
 /**
  * @OA\Delete (
@@ -30,12 +27,7 @@ use Laravel\Lumen\Http\Request;
 final class Delete extends Controller
 {
 
-
-    public function __construct()
-    {
-    }
-
-    public function __invoke(Request $request, $id): JsonResponse
+    public function __invoke(Request $request, $organization): JsonResponse
     {
         try {
             $this->validate($request, [
@@ -45,19 +37,9 @@ final class Delete extends Controller
             $this->respondWithValidationError("Invalid organization id", $e->errors(), 400);
         }
 
-        $org = Auth::User()->organizations()->get()->find($id);
+        $request->user()->organizations()->find($organization)->delete();
 
-        if (!$org) {
-            return $this->respondWithError("Organization not found", 404);
-        }
-
-        if ($org->pivot->role !== 'owner') {
-            return $this->respondWithError("You are not the owner of this organization", 403);
-        }
-
-        $org->delete();
-
-        return $this->respondWithSuccess( "Organization $id deleted.");
+        return $this->respondWithSuccess( "Organization $organization deleted.");
     }
 
 }

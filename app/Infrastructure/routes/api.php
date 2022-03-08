@@ -44,7 +44,12 @@ $router->group([
 ], function () use ($router) {
     $router->put('', "Create");
     $router->get('', "GetAll");
-    $router->delete('/{id:[0-9]+}', "Delete");
-    $router->get('/{id:[0-9]+}/members', "GetMembers");
-    $router->put('/{id:[0-9]+}/members', "AddMember");
+    $router->group([
+        'prefix' => '{organization:[0-9]+}',
+        'middleware' => 'organization_owner'
+    ], function () use ($router) {
+        $router->get('/members', "GetMembers");
+        $router->put('/members', "AddMember");
+        $router->delete('', "Delete");
+    });
 });

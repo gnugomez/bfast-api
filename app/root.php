@@ -90,6 +90,9 @@ $app->middleware([
 $app->routeMiddleware([
     'auth' => App\Application\Middlewares\Authenticate::class,
 ]);
+$app->routeMiddleware([
+    'organization_owner' => App\Application\Middlewares\OrganizationOwner::class,
+]);
 
 
 /*

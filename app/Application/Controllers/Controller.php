@@ -38,7 +38,6 @@ class Controller extends BaseController
     protected function respondWithSuccess($message = null, $code = 200, $data = null): JsonResponse
     {
         $response = [
-            'success' => true,
             'message' => $message,
         ];
 
@@ -52,7 +51,6 @@ class Controller extends BaseController
     protected function respondWithError($message, $code): JsonResponse
     {
         return response()->json([
-            'success' => false,
             'message' => $message
         ], $code);
     }
@@ -60,7 +58,6 @@ class Controller extends BaseController
     protected function respondWithValidationError($message, $errors, $code): JsonResponse
     {
         return response()->json([
-            'success' => false,
             'message' => $message,
             'errors' => $errors
         ], $code);

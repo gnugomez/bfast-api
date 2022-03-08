@@ -28,19 +28,13 @@ use Illuminate\Support\Facades\Auth;
  */
 final class AddMember extends Controller
 {
-    public function __invoke(Request $request, $id): JsonResponse
+    public function __invoke(Request $request, $organization): JsonResponse
     {
         $this->validate($request, [
             'user_email' => 'required|email',
         ]);
 
-        $user = Auth::user();
-
-        $organization = $user->organizations()->findOrFail($id);
-
-        if ($organization->pivot->role !== 'owner') {
-            return $this->respondWithError('You are not the owner of this organization', 403);
-        }
+        $organization = $request->user()->organizations()->find($organization);
 
         $userToAdd = User::where('email', $request->user_email)->first();
 
@@ -56,4 +50,5 @@ final class AddMember extends Controller
 
         return $this->respondWithSuccess('User added to organization');
     }
+
 }

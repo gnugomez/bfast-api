@@ -4,8 +4,7 @@ namespace App\Application\Controllers\Organization;
 
 use App\Application\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Lumen\Http\Request;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Get(
@@ -22,26 +21,8 @@ use Laravel\Lumen\Http\Request;
 final class GetMembers extends Controller
 {
 
-
-    public function __construct()
+    public function __invoke(Request $request, $organization): JsonResponse
     {
-    }
-
-    public function __invoke(Request $request, $id): JsonResponse
-    {
-        $organization = Auth::user()->organizations()->findOrFail($id);
-
-        if (!$organization) {
-            return response()->json([
-                'message' => 'Organization not found'
-            ], 404);
-        }
-
-        if ($organization->pivot->role !== 'owner') {
-            return response()->json([
-                'message' => 'You are not authorized to access this resource'
-            ], 403);
-        }
-        return new JsonResponse($organization->users()->get());
+        return new JsonResponse($request->user()->organizations()->find($organization)->users()->get());
     }
 }

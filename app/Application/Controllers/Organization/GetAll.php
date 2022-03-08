@@ -4,7 +4,7 @@ namespace App\Application\Controllers\Organization;
 
 use App\Application\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 /**
  * @OA\Get(
@@ -20,14 +20,8 @@ use Illuminate\Support\Facades\Auth;
  */
 final class GetAll extends Controller
 {
-
-
-    public function __construct()
+    public function __invoke(Request $request): JsonResponse
     {
-    }
-
-    public function __invoke(): JsonResponse
-    {
-        return new JsonResponse(Auth::User()->organizations()->get());
+        return new JsonResponse($request->user()->organizations()->get());
     }
 }

@@ -34,10 +34,6 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 final class Create extends Controller
 {
 
-    public function __contructor()
-    {
-    }
-
     public function __invoke(Request $request): JsonResponse
     {
         try {
@@ -52,7 +48,7 @@ final class Create extends Controller
             );
         }
 
-        $user = Auth::User();
+        $user = $request->user();
 
         $newOrganization = $user->organizations()->create([
             'name' => $request->input('name'),
