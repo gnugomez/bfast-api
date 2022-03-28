@@ -93,6 +93,9 @@ $app->routeMiddleware([
 $app->routeMiddleware([
     'organization_owner' => App\Application\Middlewares\OrganizationOwner::class,
 ]);
+$app->routeMiddleware([
+    'organization_exist' => App\Application\Middlewares\OrganizationExist::class,
+]);
 
 
 /*

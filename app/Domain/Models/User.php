@@ -47,4 +47,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->belongsToMany(Organization::class)->withPivot("role");
     }
+
+    public function workspaces($organization_id): BelongsToMany
+    {
+        return $this->belongsToMany(Workspace::class)->withPivot("role")->where("organization_id", $organization_id);
+    }
 }

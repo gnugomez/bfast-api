@@ -38,18 +38,54 @@ $router->group([
 });
 
 $router->group([
+
     'prefix' => 'organizations',
     'namespace' => 'Organization',
     'middleware' => 'auth:api'
-], function () use ($router) {
-    $router->put('', "Create");
-    $router->get('', "GetAll");
-    $router->group([
-        'prefix' => '{organization:[0-9]+}',
-        'middleware' => 'organization_owner'
-    ], function () use ($router) {
-        $router->get('/members', "GetMembers");
-        $router->put('/members', "AddMember");
-        $router->delete('', "Delete");
+],
+
+    function () use ($router) {
+
+        $router->put('', "Create");
+        $router->get('', "GetAll");
+
+        $router->group([
+            'prefix' => '{organization:[0-9]+}',
+            'middleware' => ['organization_owner', 'organization_exist']
+        ],
+            function () use ($router) {
+
+                $router->get('/members', "GetMembers");
+                $router->put('/members', "AddMember");
+                $router->delete('', "Delete");
+
+                $router->group([
+                    'prefix' => 'workspaces',
+                    'namespace' => 'Workspace',
+                ],
+                    function () use ($router) {
+                        $router->get('', "GetAll");
+                        $router->put('', "Create");
+                        $router->delete('/{workspace:[0-9]+}', "Delete");
+                    }
+                );
+
+            });
+
+        $router->group([
+            'prefix' => '{organization:[0-9]+}',
+            'middleware' => 'organization_exist'
+        ],
+            function () use ($router) {
+
+                $router->group([
+                    'prefix' => 'workspaces',
+                    'namespace' => 'Workspace',
+                ],
+                    function () use ($router) {
+                        $router->get('self', "GetSelf");
+                    }
+                );
+
+            });
     });
-});

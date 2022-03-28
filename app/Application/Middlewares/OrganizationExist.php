@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Closure;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class OrganizationOwner
+class OrganizationExist
 {
 
     /**
@@ -21,10 +21,10 @@ class OrganizationOwner
         $user = $request->user();
         $organization = $user->organizations()->find($request->route('organization'));
 
-        if ($organization->pivot->role !== 'owner') {
+        if (!$organization) {
             return response()->json([
-                'message' => 'You are not the owner of this organization.'
-            ], ResponseAlias::HTTP_FORBIDDEN);
+                'message' => 'Organization not found'
+            ], 404);
         }
 
         return $next($request);

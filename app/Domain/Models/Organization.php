@@ -28,6 +28,6 @@ class Organization extends Model
 
     public function workspaces(): HasMany
     {
-        return $this->hasMany(Workspace::class);
+        return $this->hasMany(Workspace::class)->with('users');
     }
 }

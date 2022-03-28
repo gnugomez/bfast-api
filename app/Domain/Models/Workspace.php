@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Workspace extends Model
 {
@@ -15,7 +16,17 @@ class Workspace extends Model
     protected $fillable = [
         'name',
         'description',
+        'image',
+        'slug',
     ];
+
+    protected static function boot() {
+        parent::boot();
+
+        static::creating(function ($workspace) {
+            $workspace->slug = Str::slug($workspace->name);
+        });
+    }
 
     public function users(): BelongsToMany
     {
