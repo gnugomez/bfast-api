@@ -3,22 +3,18 @@
 namespace App\Domain\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Organization extends Model
+class Workspace extends Model
 {
+
     use SoftDeletes;
 
     protected $fillable = [
         'name',
         'description',
-        'address',
-        'phone',
-        'email',
-        'website',
-        'logo',
     ];
 
     public function users(): BelongsToMany
@@ -26,8 +22,9 @@ class Organization extends Model
         return $this->belongsToMany(User::class)->withPivot('role');
     }
 
-    public function workspaces(): HasMany
+    public function organiztion(): BelongsTo
     {
-        return $this->hasMany(Workspace::class);
+        return $this->belongsTo(Organization::class);
     }
+
 }
