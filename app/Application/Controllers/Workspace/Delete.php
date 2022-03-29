@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Controllers\Organization\Workspace;
+namespace App\Application\Controllers\Workspace;
 
 use App\Application\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
  * @OA\Delete (
  *     path="/organizations/{organization_id}/workspaces/{workspace_id}",
  *     summary="Delete workspace, only for organization owner",
- *     tags={"organizations"},
+ *     tags={"workspaces"},
  *     security={{"passport":{}}},
  *     @OA\Parameter(
  *          name="organiztion_id",
@@ -38,6 +38,5 @@ class Delete extends Controller
         $workspace->delete();
 
         return $this->respondWithSuccess('Workspace deleted successfully');
-
     }
 }

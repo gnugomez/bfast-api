@@ -96,6 +96,9 @@ $app->routeMiddleware([
 $app->routeMiddleware([
     'organization_exist' => App\Application\Middlewares\OrganizationExist::class,
 ]);
+$app->routeMiddleware([
+    'workspace_exist' => App\Application\Middlewares\WorkspaceExist::class,
+]);
 
 
 /*

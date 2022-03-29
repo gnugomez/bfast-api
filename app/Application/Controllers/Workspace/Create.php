@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Application\Controllers\Organization;
+namespace App\Application\Controllers\Workspace;
 
 use App\Application\Controllers\Controller;
-use App\Domain\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
  * @OA\Put(
- *     path="/organizations/{organization_id}",
- *     tags={"organizations"},
- *     summary="Add user to a given organization",
+ *     path="/organizations/{organization_id}/workspaces",
+ *     tags={"workspaces"},
+ *     summary="Create work space",
  *     security={{"passport":{}}},
  *     @OA\Parameter (
- *         name="user_email",
+ *         name="name",
  *         in="query",
- *         description="Email of the user to add",
+ *         description="Name of the new work space",
  *         required=true,
  *     ),
  *     @OA\Response(
@@ -27,13 +27,15 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
  *     ),
  * )
  */
-final class AddMember extends Controller
+class Create extends Controller
 {
+
     public function __invoke(Request $request, $organization): JsonResponse
     {
+
         try {
             $this->validate($request, [
-                'user_email' => 'required|email',
+                'name' => 'required|string|max:255',
             ]);
         } catch (ValidationException $e) {
             return $this->respondWithValidationError(
@@ -45,19 +47,13 @@ final class AddMember extends Controller
 
         $organization = $request->user()->organizations()->find($organization);
 
-        $userToAdd = User::where('email', $request->input('user_email'))->first();
+        $organization->workspaces()->create([
+            'name' => $request->input('name'),
+        ]);
 
-        if (!$userToAdd) {
-            return $this->respondWithError('User not found', 404);
-        }
-
-        if ($organization->users()->find($userToAdd->id)) {
-            return $this->respondWithError('User already in organization', 409);
-        }
-
-        $organization->users()->attach($userToAdd->id, ['role' => 'member']);
-
-        return $this->respondWithSuccess('User added to organization');
+        return $this->respondWithSuccess(
+            "Work space created successfully",
+            ResponseAlias::HTTP_CREATED
+        );
     }
-
 }

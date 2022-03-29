@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Controllers\Organization\Workspace;
+namespace App\Application\Controllers\Workspace;
 
 use App\Application\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Get(
  *     path="/organizations/{organization_id}/workspaces",
- *     tags={"organizations"},
+ *     tags={"workspaces"},
  *     summary="List all workspaces from organization",
  *     security={{"passport":{}}},
  *     @OA\Response(
@@ -18,10 +18,10 @@ use Illuminate\Http\Request;
  *     ),
  * )
  */
-final class GetSelf extends Controller
+final class GetAll extends Controller
 {
     public function __invoke(Request $request, $organization): JsonResponse
     {
-        return new JsonResponse($request->user()->workspaces($organization)->get());
+        return new JsonResponse($request->user()->organizations()->find($organization)->workspaces()->get());
     }
 }

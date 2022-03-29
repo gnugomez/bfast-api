@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Closure;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class OrganizationExist
+class WorkspaceExist
 {
 
     /**
@@ -19,11 +19,11 @@ class OrganizationExist
     public function handle(Request $request, Closure $next): mixed
     {
         $user = $request->user();
-        $organization = $user->organizations()->find($request->route('organization'));
+        $workspace = $user->organizations()->find($request->route('organization'))->workspaces()->find($request->route('workspace'));
 
-        if (!$organization) {
+        if (!$workspace) {
             return response()->json([
-                'message' => 'Organization not found'
+                'message' => 'Workspace not found in this organization',
             ], ResponseAlias::HTTP_NOT_FOUND);
         }
 

@@ -20,7 +20,8 @@ class Workspace extends Model
         'slug',
     ];
 
-    protected static function boot() {
+    protected static function boot()
+    {
         parent::boot();
 
         static::creating(function ($workspace) {
@@ -37,5 +38,4 @@ class Workspace extends Model
     {
         return $this->belongsTo(Organization::class);
     }
-
 }

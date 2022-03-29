@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 /**
  * @OA\Delete (
  *     path="/organizations/{id}",
- *     summary="Delete user",
+ *     summary="Delete organization, only for organization owner",
  *     tags={"organizations"},
  *     security={{"passport":{}}},
  *     @OA\Parameter(
@@ -39,7 +39,6 @@ final class Delete extends Controller
 
         $request->user()->organizations()->find($organization)->delete();
 
-        return $this->respondWithSuccess( "Organization $organization deleted.");
+        return $this->respondWithSuccess("Organization $organization deleted.");
     }
-
 }

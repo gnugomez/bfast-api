@@ -5,7 +5,6 @@ namespace App\Application\Controllers\Organization;
 use App\Application\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
@@ -13,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
  * @OA\Put(
  *     path="/organizations",
  *     tags={"organizations"},
- *     summary="Create a new user",
+ *     summary="Create a new organization",
  *     security={{"passport":{}}},
  *     @OA\Parameter (
  *         name="name",
@@ -59,6 +58,5 @@ final class Create extends Controller
             ResponseAlias::HTTP_CREATED,
             $user->organizations()->get()->where('id', $newOrganization->id)->first()
         );
-
     }
 }
