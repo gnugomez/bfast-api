@@ -42,7 +42,7 @@ $router->group(
     [
         'prefix' => 'organizations/{organization:[0-9]+}/workspaces',
         'namespace' => 'Workspace',
-        'middleware' => 'auth'
+        'middleware' => ['auth', 'organization_exist']
     ],
     function () use ($router) {
         require __DIR__ . '/workspaces.php';

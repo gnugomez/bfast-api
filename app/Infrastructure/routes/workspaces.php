@@ -4,23 +4,16 @@ use Laravel\Lumen\Routing\Router;
 
 /** @var Router $router */
 
-$router->group(
-	[
-		'middleware' => 'organization_exist'
-	],
-	function () use ($router) {
-		$router->get('self', "GetSelf");
-	}
-);
+$router->get('self', "GetSelf");
 
 $router->group(
 	[
-		'middleware' => ['organization_exist', 'organization_owner']
+		'middleware' => ['organization_owner']
 	],
 	function () use ($router) {
 
+		$router->post('', "Create");
 		$router->get('', "GetAll");
-		$router->put('', "Create");
 
 		$router->group(
 			[

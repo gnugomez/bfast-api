@@ -4,7 +4,7 @@ use Laravel\Lumen\Routing\Router;
 
 /** @var Router $router */
 
-$router->put('', "Create");
+$router->post('', "Create");
 $router->get('', "GetAll");
 
 $router->group(
