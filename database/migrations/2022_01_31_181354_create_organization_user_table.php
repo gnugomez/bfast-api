@@ -14,6 +14,7 @@ class CreateOrganizationUserTable extends Migration
     public function up()
     {
         Schema::create('organization_user', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('organization_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->string('role')->default("owner");

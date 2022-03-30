@@ -14,6 +14,7 @@ class CreateUserWorkspaceTable extends Migration
     public function up()
     {
         Schema::create('user_workspace', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('workspace_id')->unsigned();
             $table->string('role')->default('member');

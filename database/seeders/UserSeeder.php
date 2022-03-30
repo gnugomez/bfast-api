@@ -14,12 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $f = new \NumberFormatter("en", \NumberFormatter::SPELLOUT);
         for ($i = 0; $i < 20; $i++) {
             DB::table('users')->insert([
-                'name' => 'Jordi',
-                'surname' => 'Gómez',
-                'email' => 'gnugomez' . $i . '@gmail.com',
-                'password' => 'Socmanel123!',
+                'name' => $f->format($i),
+                'surname' => sprintf("%02d", $i),
+                'email' => 'test' . $i . '@test.com',
+                'password' => password_hash('1', PASSWORD_DEFAULT),
             ]);
         }
     }
