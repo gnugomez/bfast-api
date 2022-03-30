@@ -8,6 +8,17 @@ $router->get('self', "GetSelf");
 
 $router->group(
 	[
+		'prefix' => '{workspace:[0-9]+}',
+		'middleware' => ['workspace_exist'],
+		'namespace' => 'Members',
+	],
+	function () use ($router) {
+		$router->get('members', "GetAll");
+	}
+);
+
+$router->group(
+	[
 		'middleware' => ['organization_owner']
 	],
 	function () use ($router) {
@@ -28,7 +39,6 @@ $router->group(
 						'namespace' => 'Members',
 					],
 					function () use ($router) {
-						$router->get('members', "GetAll");
 						$router->put('members', "Add");
 					}
 				);
