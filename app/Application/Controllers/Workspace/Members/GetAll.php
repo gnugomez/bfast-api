@@ -23,6 +23,6 @@ final class GetAll extends Controller
 
 	public function __invoke(Request $request, $organization, $workspace): JsonResponse
 	{
-		return new JsonResponse($request->user()->organizations()->find($organization)->workspaces()->find($workspace)->users()->get());
+		return new JsonResponse($request->user()->organizations()->find($organization)->workspaces()->find($workspace)->users()->orderBy("pivot_id")->get());
 	}
 }

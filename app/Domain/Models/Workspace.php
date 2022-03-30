@@ -31,7 +31,7 @@ class Workspace extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withPivot('role');
+        return $this->belongsToMany(User::class)->withPivot(['role', 'id']);
     }
 
     public function organiztion(): BelongsTo
