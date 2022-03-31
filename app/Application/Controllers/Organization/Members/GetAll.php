@@ -5,6 +5,7 @@ namespace App\Application\Controllers\Organization\Members;
 use App\Application\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Domain\Models\Organization;
 
 /**
  * @OA\Get(
@@ -23,6 +24,11 @@ final class GetAll extends Controller
 
     public function __invoke(Request $request, $organization): JsonResponse
     {
-        return new JsonResponse($request->user()->organizations()->find($organization)->users()->orderBy('pivot_id')->get());
+        $members = array_map(function ($member) {
+            $member['role'] = $member['pivot']['role'];
+            $member['privileged'] = in_array($member['role'], Organization::getPrivilegedRoles());
+            return $member;
+        }, $request->user()->organizations()->find($organization)->users()->orderBy('pivot_id')->get()->toArray());
+        return new JsonResponse($members);
     }
 }
