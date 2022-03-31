@@ -21,6 +21,14 @@ class Organization extends Model
         'logo',
     ];
 
+    public static function getPrivilegedRoles(): array
+    {
+        return [
+            'admin',
+            'owner',
+        ];
+    }
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class)->withPivot(['role', 'id']);
