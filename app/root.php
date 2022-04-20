@@ -91,13 +91,13 @@ $app->routeMiddleware([
     'auth' => App\Application\Middlewares\Authenticate::class,
 ]);
 $app->routeMiddleware([
-    'organization_owner' => App\Application\Middlewares\OrganizationOwner::class,
+    'user_privileged_in_organization' => App\Application\Middlewares\UserPrivilegedInOrganization::class,
 ]);
 $app->routeMiddleware([
-    'organization_exist' => App\Application\Middlewares\OrganizationExist::class,
+    'organization_exist_for_user' => App\Application\Middlewares\OrganizationExistForUser::class,
 ]);
 $app->routeMiddleware([
-    'workspace_exist' => App\Application\Middlewares\WorkspaceExist::class,
+    'workspace_exist_for_user_in_organization' => App\Application\Middlewares\WorkspaceExistForUserInOrganization::class,
 ]);
 
 

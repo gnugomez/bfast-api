@@ -2,6 +2,7 @@
 
 namespace App\Domain\Models;
 
+use Faker\Core\Number;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -51,5 +52,10 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function workspaces($organization_id): BelongsToMany
     {
         return $this->belongsToMany(Workspace::class)->withPivot("role")->where("organization_id", $organization_id);
+    }
+
+    public function isPrivilegedInOrganization(int $organization_id): bool
+    {
+        return $this->organizations()->wherePivotIn("role", Organization::getPrivilegedRoles())->find($organization_id) !== null;
     }
 }

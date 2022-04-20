@@ -10,7 +10,7 @@ $router->get('', "GetAll");
 $router->group(
 	[
 		'prefix' => '{organization:[0-9]+}',
-		'middleware' => ['organization_exist', 'organization_owner']
+		'middleware' => ['organization_exist_for_user', 'user_privileged_in_organization']
 	],
 	function () use ($router) {
 

@@ -18,7 +18,7 @@ $router->group(
 $router->group(
 	[
 		'prefix' => '{workspace:[0-9]+}',
-		'middleware' => ['workspace_exist'],
+		'middleware' => ['workspace_exist_for_user_in_organization'],
 		'namespace' => 'Members',
 	],
 	function () use ($router) {
@@ -28,7 +28,7 @@ $router->group(
 
 $router->group(
 	[
-		'middleware' => ['organization_owner']
+		'middleware' => ['user_privileged_in_organization']
 	],
 	function () use ($router) {
 
@@ -38,7 +38,7 @@ $router->group(
 		$router->group(
 			[
 				'prefix' => '{workspace:[0-9]+}',
-				'middleware' => ['workspace_exist'],
+				'middleware' => ['workspace_exist_for_user_in_organization'],
 			],
 			function () use ($router) {
 				$router->delete('', "Delete");

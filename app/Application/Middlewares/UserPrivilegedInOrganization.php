@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Closure;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class OrganizationOwner
+class UserPrivilegedInOrganization
 {
 
     /**
@@ -19,15 +19,13 @@ class OrganizationOwner
     public function handle(Request $request, Closure $next): mixed
     {
         $user = $request->user();
-        $organization = $user->organizations()->find($request->route('organization'));
 
-        if ($organization->pivot->role !== 'owner') {
+        if (!$user->isPrivilegedInOrganization($request->route('organization'))) {
             return response()->json([
-                'message' => 'You are not the owner of this organization.'
+                'message' => 'You are not allowed to do that in this organization.'
             ], ResponseAlias::HTTP_FORBIDDEN);
         }
 
         return $next($request);
     }
-
 }

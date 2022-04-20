@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Closure;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class OrganizationExist
+class OrganizationExistForUser
 {
 
     /**

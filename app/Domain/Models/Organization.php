@@ -38,4 +38,9 @@ class Organization extends Model
     {
         return $this->hasMany(Workspace::class)->with('users');
     }
+
+    public function isUserPrivileged(int $user_id): bool
+    {
+        return $this->users()->wherePivotIn('role', self::getPrivilegedRoles())->find($user_id) !== null;
+    }
 }

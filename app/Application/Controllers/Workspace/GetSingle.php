@@ -23,7 +23,7 @@ final class GetSingle extends Controller
 
 		$isUserInWorkspace = $workspace->users()->find($user->id);
 
-		if (!$isUserInWorkspace && !$organization->isPrivileged($user)) {
+		if (!$isUserInWorkspace && !$organization->isUserPrivileged($user->id)) {
 			return response()->json([
 				'message' => 'You are not a member of this workspace',
 			], ResponseAlias::HTTP_FORBIDDEN);
