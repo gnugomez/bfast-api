@@ -8,6 +8,15 @@ $router->get('self', "GetSelf");
 
 $router->group(
 	[
+		'prefix' => '{workspace_slug:.*}',
+	],
+	function () use ($router) {
+		$router->get('', "GetSingle");
+	}
+);
+
+$router->group(
+	[
 		'prefix' => '{workspace:[0-9]+}',
 		'middleware' => ['workspace_exist'],
 		'namespace' => 'Members',
