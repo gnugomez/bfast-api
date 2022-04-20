@@ -10,7 +10,7 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
- * @OA\Put(
+ * @OA\Post(
  *     path="/organizations/{organization_id}/workspaces",
  *     tags={"workspaces"},
  *     summary="Create work space",

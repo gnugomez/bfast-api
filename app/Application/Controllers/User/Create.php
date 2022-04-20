@@ -11,7 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
- * @OA\Put(
+ * @OA\Post(
  *     path="/users",
  *     tags={"users"},
  *     summary="Create a new user",

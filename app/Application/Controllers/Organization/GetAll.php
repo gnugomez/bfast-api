@@ -23,7 +23,6 @@ final class GetAll extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
-
         $organizations = array_map(function ($organization) {
             $organization['role'] = $organization['pivot']['role'];
             $organization['privileged'] = in_array($organization['role'], Organization::getPrivilegedRoles());

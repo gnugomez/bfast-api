@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
- * @OA\Put(
+ * @OA\Post(
  *     path="/organizations",
  *     tags={"organizations"},
  *     summary="Create a new organization",
