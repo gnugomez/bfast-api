@@ -20,6 +20,13 @@ class Workspace extends Model
         'slug',
     ];
 
+    public static function getPrivilegedRoles(): array
+    {
+        return [
+            'manager',
+        ];
+    }
+
     protected static function boot()
     {
         parent::boot();
@@ -31,7 +38,7 @@ class Workspace extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withPivot(['role', 'id']);
+        return $this->belongsToMany(User::class)->withPivot(['role', 'id'])->withPivotValue('role', 'member');
     }
 
     public function organiztion(): BelongsTo

@@ -3,6 +3,7 @@
 namespace App\Application\Controllers\Workspace;
 
 use App\Application\Controllers\Controller;
+use App\Domain\Models\Workspace;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
@@ -28,6 +29,15 @@ final class GetSingle extends Controller
 				'message' => 'You are not a member of this workspace',
 			], ResponseAlias::HTTP_FORBIDDEN);
 		}
+
+		$users = array_map(function ($member) {
+			$member['role'] = $member['pivot']['role'];
+			$member['privileged'] = in_array($member['role'], Workspace::getPrivilegedRoles());
+			return $member;
+		}, $workspace->users()->orderBy('pivot_id')->get()->toArray());
+
+		$workspace = $workspace->toArray();
+		$workspace['users'] = $users;
 
 		return new JsonResponse($workspace);
 	}

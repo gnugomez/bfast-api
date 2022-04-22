@@ -57,6 +57,10 @@ final class Add extends Controller
 
         $userToAdd = User::where('email', $request->input('user_email'))->first();
 
+        if (!$userToAdd) {
+            return $this->respondWithError('User not found', 404);
+        }
+
         $org = $userToAdd->organizations()->find($organization);
 
         if (!$org) {
@@ -67,10 +71,6 @@ final class Add extends Controller
         }
 
         $workspaceObj = $org->workspaces()->find($workspace);
-
-        if (!$userToAdd) {
-            return $this->respondWithError('User not found', 404);
-        }
 
         if ($workspaceObj->users()->find($userToAdd->id)) {
             return $this->respondWithError('User already in workspace', 409);

@@ -3,6 +3,7 @@
 namespace App\Application\Controllers\Workspace\Members;
 
 use App\Application\Controllers\Controller;
+use App\Domain\Models\Workspace;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -23,6 +24,13 @@ final class GetAll extends Controller
 
 	public function __invoke(Request $request, $organization, $workspace): JsonResponse
 	{
-		return new JsonResponse($request->user()->organizations()->find($organization)->workspaces()->find($workspace)->users()->orderBy("pivot_id")->get());
+
+		$users = array_map(function ($member) {
+			$member['role'] = $member['pivot']['role'];
+			$member['privileged'] = in_array($member['role'], Workspace::getPrivilegedRoles());
+			return $member;
+		}, $request->user()->organizations()->find($organization)->workspaces()->find($workspace)->users()->orderBy("pivot_id")->get()->toArray());
+
+		return new JsonResponse($users);
 	}
 }
