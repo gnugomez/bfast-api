@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Closure;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
-class WorkspaceExistForUserInOrganization
+class WorkspaceExistInOrganization
 {
 
     /**
@@ -26,6 +26,8 @@ class WorkspaceExistForUserInOrganization
                 'message' => 'Workspace not found in this organization',
             ], ResponseAlias::HTTP_NOT_FOUND);
         }
+
+        $request->merge(['workspace' => $workspace]);
 
         return $next($request);
     }

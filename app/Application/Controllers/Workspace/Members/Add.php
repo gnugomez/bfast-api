@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
  * @OA\Put(
- *     path="/organizations/{organization_id}/{workspace_id}",
+ *     path="/organizations/{organization_id}/{workspace_id}/members",
  *     tags={"workspaces"},
  *     summary="Add user to a given organization",
  *     security={{"passport":{}}},
@@ -41,7 +41,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
  */
 final class Add extends Controller
 {
-    public function __invoke(Request $request, $organization, $workspace): JsonResponse
+    public function __invoke(Request $request, $organization): JsonResponse
     {
         try {
             $this->validate($request, [
@@ -70,13 +70,11 @@ final class Add extends Controller
             );
         }
 
-        $workspaceObj = $org->workspaces()->find($workspace);
-
-        if ($workspaceObj->users()->find($userToAdd->id)) {
+        if ($request->workspace->users()->find($userToAdd->id)) {
             return $this->respondWithError('User already in workspace', 409);
         }
 
-        $workspaceObj->users()->attach($userToAdd->id, ['role' => 'member']);
+        $request->workspace->users()->attach($userToAdd->id, ['role' => 'member']);
 
         return $this->respondWithSuccess('User added to workspace');
     }

@@ -30,12 +30,9 @@ use Illuminate\Http\Request;
  */
 class Delete extends Controller
 {
-    public function __invoke(Request $request, $organization, $workspace): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
-
-        $workspace = $request->user()->organizations()->findOrFail($organization)->workspaces()->findOrFail($workspace);
-
-        $workspace->delete();
+        $request->workspace->delete();
 
         return $this->respondWithSuccess('Workspace deleted successfully');
     }

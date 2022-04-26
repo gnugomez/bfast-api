@@ -27,6 +27,8 @@ class OrganizationExistForUser
             ], ResponseAlias::HTTP_NOT_FOUND);
         }
 
+        $request->merge(['organization' => $organization]);
+
         return $next($request);
     }
 }

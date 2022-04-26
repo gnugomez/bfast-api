@@ -8,7 +8,7 @@ $router->get('self', "GetSelf");
 
 $router->group(
 	[
-		'prefix' => '{workspace_slug:.*}',
+		'prefix' => '{workspace_slug}',
 	],
 	function () use ($router) {
 		$router->get('', "GetSingle");
@@ -18,7 +18,7 @@ $router->group(
 $router->group(
 	[
 		'prefix' => '{workspace:[0-9]+}',
-		'middleware' => ['workspace_exist_for_user_in_organization'],
+		'middleware' => ['workspace_exist_in_organization'],
 		'namespace' => 'Members',
 	],
 	function () use ($router) {
@@ -38,7 +38,7 @@ $router->group(
 		$router->group(
 			[
 				'prefix' => '{workspace:[0-9]+}',
-				'middleware' => ['workspace_exist_for_user_in_organization'],
+				'middleware' => ['workspace_exist_in_organization'],
 			],
 			function () use ($router) {
 				$router->delete('', "Delete");
@@ -49,6 +49,7 @@ $router->group(
 					],
 					function () use ($router) {
 						$router->put('members', "Add");
+						$router->patch('members/{user_id:[0-9]+}', "UpdateRole");
 					}
 				);
 			}

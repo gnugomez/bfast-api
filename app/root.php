@@ -97,7 +97,7 @@ $app->routeMiddleware([
     'organization_exist_for_user' => App\Application\Middlewares\OrganizationExistForUser::class,
 ]);
 $app->routeMiddleware([
-    'workspace_exist_for_user_in_organization' => App\Application\Middlewares\WorkspaceExistForUserInOrganization::class,
+    'workspace_exist_in_organization' => App\Application\Middlewares\WorkspaceExistInOrganization::class,
 ]);
 
 
