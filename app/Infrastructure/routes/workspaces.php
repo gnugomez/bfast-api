@@ -49,6 +49,7 @@ $router->group(
 					],
 					function () use ($router) {
 						$router->put('members', "Add");
+						$router->delete('members/{user_id:[0-9]+}', "Remove");
 						$router->patch('members/{user_id:[0-9]+}', "UpdateRole");
 					}
 				);

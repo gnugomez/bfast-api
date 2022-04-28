@@ -27,12 +27,29 @@ class Workspace extends Model
         ];
     }
 
+    public static function getRoles(): array
+    {
+        return [
+            'manager',
+            'member',
+        ];
+    }
+
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($workspace) {
-            $workspace->slug = Str::slug($workspace->name);
+            $slug = Str::slug($workspace->name);
+
+            if (static::where([
+                ['slug', '=', $slug],
+                ['organization_id', '=', $workspace->organization_id]
+            ])->exists()) {
+                $slug = $slug . '-' . uniqid();
+            }
+
+            $workspace->slug = $slug;
         });
     }
 
@@ -44,5 +61,15 @@ class Workspace extends Model
     public function organiztion(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    public function changeUserRole(User $user, string $role): bool
+    {
+        if (in_array($role, Workspace::getRoles())) {
+            $this->users()->updateExistingPivot($user->id, ['role' => $role]);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

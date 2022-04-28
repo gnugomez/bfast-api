@@ -3,16 +3,17 @@
 namespace App\Application\Controllers\Workspace\Members;
 
 use App\Application\Controllers\Controller;
+use App\Domain\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 /**
- * @OA\Patch(
+ * @OA\Delete(
  *     path="/organizations/{organization_id}/{workspace_id}/members/{user_id}",
  *     tags={"workspaces"},
- *     summary="Update user role in workspace",
+ *     summary="Remove user from workspace",
  *     security={{"passport":{}}},
  *     @OA\Parameter (
  *         name="user_id",
@@ -38,27 +39,16 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
  *     ),
  * )
  */
-final class UpdateRole extends Controller
+final class Remove extends Controller
 {
     public function __invoke(Request $request, $user_id): JsonResponse
     {
-        try {
-            $this->validate($request, [
-                'role' => 'required',
-            ]);
-        } catch (ValidationException $e) {
-            return $this->respondWithValidationError(
-                "Unable to update user role",
-                $e->errors(),
-                ResponseAlias::HTTP_BAD_REQUEST
-            );
-        }
 
         $userToUpdate = $request->workspace->users()->find($user_id);
 
         if (!$userToUpdate) {
             return $this->respondWithValidationError(
-                "Unable to update user role",
+                "Unable to remove user",
                 [
                     'user_id' => 'User not found',
                 ],
@@ -66,16 +56,8 @@ final class UpdateRole extends Controller
             );
         }
 
-        if (!$request->workspace->changeUserRole($userToUpdate, $request->input('role'))) {
-            return $this->respondWithValidationError(
-                "Unable to update user role",
-                [
-                    'role' => 'Role not found',
-                ],
-                ResponseAlias::HTTP_BAD_REQUEST
-            );
-        }
+        $request->workspace->users()->detach($userToUpdate);
 
-        return $this->respondWithSuccess('User rank updated', 200);
+        return $this->respondWithSuccess('User removed from workspace', 200);
     }
 }

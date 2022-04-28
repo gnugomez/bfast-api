@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response as ResponseAlias;
  * @OA\Put(
  *     path="/organizations/{organization_id}/{workspace_id}/members",
  *     tags={"workspaces"},
- *     summary="Add user to a given organization",
+ *     summary="Add user to a given workspace",
  *     security={{"passport":{}}},
  *     @OA\Parameter (
  *         name="user_email",
