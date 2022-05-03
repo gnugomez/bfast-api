@@ -45,12 +45,23 @@ $router->group(
 
 				$router->group(
 					[
+						'prefix' => 'schedules',
+						'namespace' => 'Schedules',
+					],
+					function () use ($router) {
+						$router->get('', "GetAll");
+					}
+				);
+
+				$router->group(
+					[
+						'prefix' => 'members',
 						'namespace' => 'Members',
 					],
 					function () use ($router) {
-						$router->put('members', "Add");
-						$router->delete('members/{user_id:[0-9]+}', "Remove");
-						$router->patch('members/{user_id:[0-9]+}', "UpdateRole");
+						$router->put('', "Add");
+						$router->delete('{user_id:[0-9]+}', "Remove");
+						$router->patch('{user_id:[0-9]+}', "UpdateRole");
 					}
 				);
 			}

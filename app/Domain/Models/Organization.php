@@ -36,7 +36,7 @@ class Organization extends Model
 
     public function workspaces(): HasMany
     {
-        return $this->hasMany(Workspace::class)->with('users');
+        return $this->hasMany(Workspace::class);
     }
 
     public function isUserPrivileged(int $user_id): bool

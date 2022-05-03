@@ -14,7 +14,7 @@ final class GetSingle extends Controller
 	{
 		$user = $request->user();
 		$organization = $user->organizations()->find($organization);
-		$workspace = $organization->workspaces()->where('slug', $workspace_slug)->first();
+		$workspace = $organization->workspaces()->with(['users', 'schedules'])->where('slug', $workspace_slug)->first();
 
 		if (!$workspace) {
 			return response()->json([
