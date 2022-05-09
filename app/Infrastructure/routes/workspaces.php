@@ -50,6 +50,7 @@ $router->group(
 					],
 					function () use ($router) {
 						$router->get('', "GetAll");
+						$router->post('', "Create");
 					}
 				);
 
