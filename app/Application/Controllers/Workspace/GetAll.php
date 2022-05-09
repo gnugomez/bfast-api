@@ -22,6 +22,8 @@ final class GetAll extends Controller
 {
     public function __invoke(Request $request, $organization): JsonResponse
     {
-        return new JsonResponse($request->user()->organizations()->find($organization)->workspaces()->get());
+        return new JsonResponse(
+            $request->user()->organizations()->find($organization)->workspaces()->with(['users', 'schedules'])->get()
+        );
     }
 }
