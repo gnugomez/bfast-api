@@ -58,10 +58,12 @@ class Create extends Controller
 			);
 		}
 
-		$conflictSchedule = $request->workspace->schedules()->where('weekday', $request->input('weekday'))
-			->whereBetween('start_time', [$request->input('start_time'), $request->input('end_time')])
-			->orWhereBetween('end_time', [$request->input('start_time'), $request->input('end_time')])
-			->first();
+		$conflictSchedule = $request->workspace->schedules()
+			->where('weekday', $request->input('weekday'))
+			->where(function ($q) use ($request) {
+				$q->whereBetween('start_time', [$request->input('start_time'), $request->input('end_time')])
+					->orWhereBetween('end_time', [$request->input('start_time'), $request->input('end_time')]);
+			})->first();
 
 		if ($conflictSchedule) {
 			return $this->respondWithError(
