@@ -47,8 +47,8 @@ class Create extends Controller
 		try {
 			$this->validate($request, [
 				'weekday' => 'required|integer|between:0,6',
-				'start_time' => 'required|integer|between:0,1440|lt:end_time',
-				'end_time' => 'required|integer|between:0,1440|gt:start_time',
+				'start_time' => 'required|integer|between:0,1439|lt:end_time',
+				'end_time' => 'required|integer|between:0,1439|gt:start_time',
 			]);
 		} catch (ValidationException $e) {
 			return $this->respondWithValidationError(

@@ -13,7 +13,7 @@ final class GetSingle extends Controller
 	public function __invoke(Request $request, $organization, $workspace_slug): JsonResponse
 	{
 		$user = $request->user();
-		$organization = $user->organizations()->find($organization);
+		$organization = $request->organization;
 		$workspace = $organization->workspaces()->with(['users', 'schedules'])->where('slug', $workspace_slug)->first();
 
 		if (!$workspace) {
