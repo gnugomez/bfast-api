@@ -51,6 +51,15 @@ $router->group(
 					function () use ($router) {
 						$router->get('', "GetAll");
 						$router->post('', "Create");
+
+						$router->group(
+							[
+								'prefix' => '{schedule_id:[0-9]+}',
+							],
+							function () use ($router) {
+								$router->delete('', "Delete");
+							}
+						);
 					}
 				);
 
